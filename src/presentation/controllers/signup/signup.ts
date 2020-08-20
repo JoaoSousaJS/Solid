@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { httpRequest, httpResponse, Controller, EmailValidator, AddAccount } from './signup-protocols'
+import { HttpRequest, HttpResponse, Controller, EmailValidator, AddAccount } from './signup-protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, serverError, ok } from '../../helpers/http-helper'
 
@@ -12,7 +12,7 @@ export class SignUpController implements Controller {
     this.addAccount = addAcount
   }
 
-  async handle (httpRequest: httpRequest): Promise<httpResponse> {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
       for (const field of requiredFields) {
@@ -40,6 +40,7 @@ export class SignUpController implements Controller {
 
       return ok(account)
     } catch (error) {
+      console.error(error)
       return serverError()
     }
   }
