@@ -30,7 +30,7 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "start": "nodemon src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
@@ -43,6 +43,7 @@
     "express": "^4.17.1",
     "fast-glob": "^3.2.4",
     "mongodb": "^3.6.0",
+    "ts-node": "^9.0.0",
     "validator": "^13.1.1"
   }
 }
