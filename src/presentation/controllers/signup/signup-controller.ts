@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { HttpRequest, HttpResponse, Controller, AddAccount, Validation, Authentication } from './signup-controller-protocols'
-import { badRequest, serverError, ok } from '../../helpers/http/http-helper'
+import { badRequest, serverError, ok, forbidden } from '../../helpers/http/http-helper'
+import { EmailInUseError } from '../../errors'
 
 export class SignUpController implements Controller {
   constructor (
@@ -16,11 +17,14 @@ export class SignUpController implements Controller {
         return badRequest(error)
       }
       const { name, email, password } = httpRequest.body
-      await this.addAcount.add({
+      const account = await this.addAcount.add({
         name,
         email,
         password
       })
+      if (!account) {
+        return forbidden(new EmailInUseError())
+      }
       const accessToken = await this.authentication.auth({
         email,
         password
